@@ -12,52 +12,49 @@
 *   **Asset:** 
     *   Nhân vật: Spritesheet chia theo 4 hàng tương ứng 4 hướng (Down, Left, Right, Up).
     *   Quái vật, Cây cối (nhiều biến thể), Đá (nhiều biến thể).
+    *   **Ma thuật (NEW):** Hệ thống ma thuật Lửa (Fire) và Nước (Water) với đầy đủ Arrow, Ball và Spell.
+    *   **Khói (NEW):** Đã tích hợp trọn bộ Asset Smoke cực khủng (Smoke Blow, Explosion, Spell, Chemical, Poisonous) cho Sát Thủ Khói.
 
 ### 2. Các Tính Năng Đã Hoàn Thiện
-*   **Hệ thống Di chuyển & Điều khiển (Movement & Controls):**
-    *   Cơ chế **MOBA / ARPG Controls**: Click chuột phải để tự động tìm đường (Auto-pathing) đến điểm chỉ định.
-    *   Click chuột trái vào quái vật để tự động khóa mục tiêu (Target - hiển thị khung đỏ) và chạy lại gần. Click ra đất trống sẽ hủy khóa mục tiêu.
-    *   Hỗ trợ ghi đè (override) bằng phím cứng: WASD hoặc phím Mũi tên.
-    *   Di chuyển chéo (Diagonal Movement) đã được chuẩn hóa tốc độ (Normalize velocity).
+*   **Hệ thống Class Đa dạng (Multiclass System - NEW):**
+    *   **Chiến Binh (Warrior):** Sử dụng kiếm, có hệ thống độ hiếm vũ khí.
+    *   **Pháp Sư Nguyên Tố (Elemental Mage):** Kết hợp Lửa và Nước. Đánh thường bắn cầu ma thuật luân phiên. Skill Q bắn Water Arrow (xuyên thấu), Skill E gọi Fire Spell (AOE nổ tại vị trí chuột).
+    *   **Sát Thủ Khói (Smoke Assassin):** Sử dụng ám khí khói. Skill Q ném phi tiêu khói, Skill E Độn Thổ (Blink) để lại làn khói gây sát thương khi hạ cánh.
+    *   **Giao diện Chọn Class:** Menu overlay lúc khởi đầu và nút **"Đổi Class / Vũ Khí"** ngay trong game để chuyển đổi linh hoạt.
+*   **Hệ thống Vũ Khí (Weapon Rarity - NEW):**
+    *   Cung cấp 3 cấp độ vũ khí cho Chiến Binh: **Common (Trắng), Uncommon (Xanh), Rare (Đỏ)**.
+    *   Mỗi cấp độ tăng thêm chỉ số Sát thương (Damage) tương ứng (+0, +15, +35).
+    *   Hiển thị icon vũ khí hiện tại và chỉ số bonus ngay trên HUD.
+*   **Hệ thống Bản đồ & Di chuyển:**
+    *   **Village Map Refactoring:** Thu nhỏ tỉ lệ các công trình (0.3 - 0.4) để cân đối với nhân vật.
+    *   **Dungeon Gate:** Di dời cổng dịch chuyển sang phía Đông, nằm giữa 2 pháo đài canh gác để tăng tính thẩm mỹ.
+    *   **Kéo để di chuyển (Drag to move - NEW):** Giữ chuột phải và kéo để nhân vật liên tục chạy theo con trỏ chuột.
+    *   Cơ chế **MOBA / ARPG Controls**: Click chuột phải để di chuyển, click chuột trái khóa mục tiêu.
 *   **Hệ thống Chiến đấu (Combat System):**
-    *   Tự động khóa mục tiêu, chạy đến sát quái và chém liên hoàn. **Tự động quay mặt** về phía quái khi tấn công.
-    *   Hỗ trợ **Hitbox chéo (Diagonal Hitbox)**: Đảm bảo đánh trúng quái kể cả khi quái đứng ở góc chéo.
-    *   Nhấn Space để chém tại chỗ.
-    *   Kỹ năng: Q (Lướt/Dash Slash - tốn 10 MP) và E (Xoay kiếm/Tornado - tốn 20 MP).
-    *   Sát thương: Có floating text (số sát thương nảy lên màu đỏ) cho cả Player và Enemy.
+    *   **Projectile System:** Pháp sư và Sát thủ sử dụng hệ thống bắn đạn đạo thay vì áp sát. Đã trả lại **Khung đỏ Targeting** khi click chuột trái vào quái để dễ ngắm bắn.
+    *   Các kỹ năng đạn đạo (Projectile) đã được lập trình **quay đầu nhọn** (Rotation + Math.PI) về phía mục tiêu.
+    *   Tự động quay mặt về phía con trỏ chuột khi dùng chiêu hoặc tấn công.
+    *   Kỹ năng Warrior: Q (Lướt/Dash Slash) và E (Xoay kiếm/Tornado).
 *   **Hệ thống Giao diện UI (HUD):**
-    *   HUD được thiết kế chuẩn Game RPG với Level Circle, HP (Đỏ), MP (Xanh), EXP (Vàng). Đã tích hợp thêm **số lượng Vàng (Gold)**.
-    *   Giao diện hiển thị skill và thời gian hồi chiêu (Cooldown).
-    *   **Fix lỗi kỹ thuật:** Tọa độ HUD đã được tối ưu hóa bằng công thức toán học để chống lại hiệu ứng Camera Zoom 1.5x của Phaser, đảm bảo luôn dính chặt ở góc trái trên cùng màn hình. Độ sâu (Depth) của HUD và Floating Text được set max là `9999` để không bao giờ bị cây/đá che khuất.
-*   **Logic Sinh tồn & Tiến trình (Survival & Progression):**
-    *   Player chết khi hết máu, hiển thị **Màn hình Game Over** với nút **🔄 Chơi Lại**.
-    *   **Lưu cấp độ (Level Persistence):** Cấp độ và EXP được lưu vào `localStorage`, không bị mất khi F5 tải lại trang hay chơi lại.
-    *   **Hệ thống Nâng cấp Ngoại hình (Skin Upgrade):** Tự động thay đổi bộ giáp khi đạt Level 5 (Swordsman_lvl2) và Level 10 (Swordsman_lvl3).
-    *   Quái vật sau khi chết sẽ có thanh hồi sinh (Respawn) tự động xuất hiện lại tại vị trí cũ.
-*   **Hệ thống Rơi đồ (Loot System):**
-    *   Quái vật có 80% tỉ lệ rơi đồ khi chết: **Vàng** (10-25G, tỉ lệ cao), **Bình Máu** (+30 HP, tỉ lệ trung bình), **Bình Mana** (+20 MP, tỉ lệ thấp).
-    *   Vật phẩm nảy lên đẹp mắt và biến mất sau 15 giây. Nhặt tự động khi đi ngang qua.
-*   **Hệ thống Admin (Admin Panel - NEW):**
-    *   Nhấn **F2** để bật/tắt bảng điều khiển Admin.
-    *   Tính năng: Tăng/Giảm Level, Thêm 1000 Vàng, Hồi đầy HP/MP, Tiêu diệt toàn bộ quái vật trên bản đồ (Kill All).
-    *   **Fix lỗi tương tác:** Đã tách riêng **UI Camera** để xử lý HUD và Admin Panel, khắc phục lỗi không bấm được nút do Camera chính bị Zoom 1.5x.
-    *   **Fix lỗi đồ vật bị dính vào màn hình:** Cây cối, đá (Assets) đã được cấu hình lại để chỉ hiển thị trên Camera chính (trôi theo map) và bỏ qua ở UI Camera.
-    *   Hỗ trợ test nhanh các mốc Level Skin (Lv 5, Lv 10) và cơ chế rơi đồ.
+    *   HUD hiển thị Level, HP, MP, EXP, Gold và Skill Slot với Cooldown.
+    *   Đã fix lỗi HUD bị trượt khi Zoom camera.
+*   **Hệ thống Admin (Admin Panel):**
+    *   Nhấn **F2** để bật/tắt: Tăng Level, Vàng, Hồi máu, Kill All quái vật.
 
 ### 3. Vấn đề Đã Giải Quyết Trong Phiên Trước
-*   Sửa lỗi mất hình khi nhân vật quay lưng (Idle Up) do spritesheet thiếu frame.
-*   Sửa lỗi Player bị chết liên tục (Infinite Loop Game Over) ngay khi dính damage lúc hết máu.
-*   Sửa lỗi hiệu ứng "cục tròn" (Target Marker) bị trượt vị trí khi thu nhỏ.
-*   Sửa lỗi nhân vật bị kẹt (đơ) không thể di chuyển khi auto-attack quái do cơ chế ghi đè Animation.
+*   **Fix lỗi "Đơ" nhân vật (Root Cause):** Sửa lỗi kẹt vĩnh viễn ở trạng thái `isAttacking` do event `animationcomplete` bị ghi đè. Thay bằng timer `delayedCall` kết hợp hệ thống auto-reset an toàn sau 800ms.
+*   **Fix lỗi undefined `projectilesGroup`:** Chỉnh lại thứ tự khởi tạo (Initialization Order) giữa Player và Scene, tránh crash khi gọi đạn.
+*   **Fix hướng nhìn:** Nhân vật giờ đây quay mặt chính xác về phía trỏ chuột khi dùng phép.
+*   **Fix hiển thị Skill:** Chỉnh lại kích thước (Scale) các quả cầu ma thuật (0.15) và ám khí khói (0.12) cho phù hợp với đầu nhân vật, nổ phép Lửa (E) xuất hiện theo hướng nhìn thay vì ở con trỏ chuột.
+*   **Nâng cấp Asset Khói:** Áp dụng bộ hiệu ứng khói động đa dạng cho các chiêu của Sát Thủ thay vì 1 ảnh tĩnh.
 
 ---
 
 ## 🚀 Các Bước Tiếp Theo (Next Steps / To-Do)
-*Dưới đây là một số gợi ý tính năng có thể làm tiếp trong tương lai:*
-1.  **AI Quái Vật Thông Minh Hơn:** Quái vật hiện tại đứng yên cho đến khi bị đánh. Cần thêm logic tự động tuần tra (Patrol) hoặc rượt đuổi người chơi (Aggro) khi người chơi lại gần.
-2.  **Hệ Thống Cửa Hàng (Shop):** Dùng Vàng nhặt được để mua đồ nâng cấp.
-3.  **Hệ Thống Tìm Đường Nâng Cao (Pathfinding A*):** Khi click chuột phải sau một tảng đá, nhân vật hiện tại sẽ chạy kẹt vào tảng đá. Cần tích hợp thư viện tìm đường (như EasyStar.js) để né vật cản.
-4.  **Âm Thanh (Audio):** Thêm tiếng chém kiếm, tiếng bước chân, hiệu ứng nhặt đồ, và nhạc nền.
+1.  **Hệ Thống Nhiệm Vụ (Quest):** Thêm NPC giao nhiệm vụ diệt quái.
+2.  **AI Quái Vật Nâng Cao:** Quái vật tự động đi tuần hoặc đuổi theo người chơi khi vào tầm nhìn.
+3.  **Hệ Thống Cửa Hàng (Shop):** Dùng Vàng mua thêm các loại ma thuật hoặc vũ khí hiếm.
+4.  **Âm Thanh (Audio):** Thêm tiếng phép thuật, tiếng chém kiếm và nhạc nền map.
 
 ---
 *Lưu ý cho AI: Khi đọc được file này ở đầu phiên làm việc, hãy chào người dùng và đề xuất một trong các mục To-Do để tiếp tục làm việc!*
